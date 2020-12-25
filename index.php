@@ -1,4 +1,6 @@
 
+
+
 <?php
  $conn = new mysqli("localhost","root","","my_db"); 
 
@@ -9,9 +11,9 @@
 
     }
 
+// needs work on file uploading... 
 
-
-    if(isset($_FILES['file'])) {
+    if(isset($_POST['submitUpload'])) {
         $file=$_FILES['file'];
         $fileTmp=$_FILES['file']['tmp_name'];
         $fileName=$_FILES['file']['name'];
@@ -47,13 +49,13 @@ if(isset($_POST['update'])) {
 
 if(isset($_POST['delete'])) {
 
- $the_id = $_POST['the_id'];
- $query = "DELETE FROM table_one WHERE id = '$the_id'";
- $conn->query($query);
+    $the_id = $_POST['the_id'];
+    $query = "DELETE FROM table_one WHERE id = '$the_id'";
+    $conn->query($query);
 
-$sql = "SELECT * FROM table_one ";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+    $sql = "SELECT * FROM table_one ";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
 
 }
 
@@ -91,7 +93,7 @@ $row = $result->fetch_assoc();
    
 </form>
 
-<form >
+<form action='#' method='post' enctype="multipart/form-data">
 <input type="file" class='file'  name='file'>    
 
 <input type="submit" class='submitUploadPic' value="submit" name='submitUpload'>
@@ -127,6 +129,9 @@ while($row = $result->fetch_assoc()) {
             <button type='submit' name='delete' class='deleteBtn'>Delete</button>
             <button type='button' class='editBtn'>EDIT</button>
         </form>
+
+        <img src='./images/".$row['uploadfile']." '>
+        ".$row['uploadfile']."
        
 
         <form class='updateForm' action='#' method='post'>
